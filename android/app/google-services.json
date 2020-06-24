@@ -1,0 +1,379 @@
+{
+  "project_info": {
+    "project_number": "911603005522",
+    "firebase_url": "https://sercl-7b895.firebaseio.com",
+    "project_id": "sercl-7b895",
+    "storage_bucket": "sercl-7b895.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:dd6977aa8519ada77a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-eepb4d8bm1neucn4dq6khokkmbtbnrfn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl",
+            "certificate_hash": "e07b159ba8d832c83c425429bebb454a388301ea"
+          }
+        },
+        {
+          "client_id": "911603005522-329dt4g0g7gabr2c3hmb56ii685bbn46.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl",
+            "certificate_hash": "f37482e98802510617223253d19579191eb85f52"
+          }
+        },
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:96c5cca11675ae537a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl.app_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-sp3d5l1mgf3fb99mabt2dbts0t2pktg5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl.app_test",
+            "certificate_hash": "f37482e98802510617223253d19579191eb85f52"
+          }
+        },
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:28344b6288808a5c7a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-ert5mesdfekp8ijdsi7h96isill7s0qq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl.dev",
+            "certificate_hash": "f37482e98802510617223253d19579191eb85f52"
+          }
+        },
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:521ad06944aed8007a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl.production"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-1iltgg648t2muickhsn753s80sgm9vp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl.production",
+            "certificate_hash": "f37482e98802510617223253d19579191eb85f52"
+          }
+        },
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:c2270e4834820b5d7a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl.stage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-ugrpef4562fvbt8t9hc1oju1c7or0meo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl.stage",
+            "certificate_hash": "f37482e98802510617223253d19579191eb85f52"
+          }
+        },
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:bedb4be57b3d56547a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl_customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-mqn8vaom4g9mf6ujprprf7j8j9bj5aom.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl_customer",
+            "certificate_hash": "2b0d8e1be4fed9312893c4ebdc540f67aed58a60"
+          }
+        },
+        {
+          "client_id": "911603005522-jcibp55e209e7346ir7vgq8vv9e5isnq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl_customer",
+            "certificate_hash": "cfedfdbb1f0a0bc23dc4ad8536bce221125dcfac"
+          }
+        },
+        {
+          "client_id": "911603005522-sr8njetoorm36ohf5364mp15ja4sf0u7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl_customer",
+            "certificate_hash": "3274c2c85f635102788c43e0122794dde5a7e5a1"
+          }
+        },
+        {
+          "client_id": "911603005522-hv162nipe220sa9kt3jp369sl37h79hi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akwad.sercl_customer",
+            "certificate_hash": "a973e31a01931f4755ab338e9bcb7c408644efd5"
+          }
+        },
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:acf622b878c9cf8f7a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl_customer.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911603005522:android:ff2b882542520b6c7a078b",
+        "android_client_info": {
+          "package_name": "com.akwad.sercl_customer.stage"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA73Nrw-Gvo0WDE7DbRPS_WKT5VRWl_ARM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911603005522-1mhkb4qgm8gp1htf8kcchoi8t49icejt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "911603005522-h3vlf23gt5c0kbndp3f5lf1v6fig596p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.akwad.sercl.dev2"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
