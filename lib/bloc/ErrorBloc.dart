@@ -33,11 +33,7 @@ class ErrorBloc {
     });
   }
 
-  static Observable<LocalError> makeStream(String route) {
-    PublishSubject<LocalError> ps = PublishSubject<LocalError>();
-    ErrorStreamMap[route] = ps;
-    return ps.stream;
-  }
+
 
   dispose() {
     //_errorFetcher.close();

@@ -21,7 +21,7 @@ class ErrorSnackWidgetState extends State<ErrorSnackWidget> {
 
   @override
   void initState() {
-    _stream = ErrorBloc.makeStream(widget.route);
+    //_stream = ErrorBloc.makeStream(widget.route);
     s = _stream.listen((LocalError error) {
       //if the widget is not on screen don't show the error
       if (!ModalRoute

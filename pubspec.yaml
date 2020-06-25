@@ -24,7 +24,7 @@ dependencies:
   firebase_messaging: 6.0.9
   connectivity: ^0.4.5+3
   load: 0.1.5+1
-  rxdart: ^0.22.6
+  rxdart: 0.24.1
   sqflite: any
   path_provider: any
   url_launcher: ^5.1.2

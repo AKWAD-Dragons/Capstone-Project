@@ -34,7 +34,7 @@ class LocationProvider {
     return coordinate;
   }
 
-  Future<Observable<Coordinate>> listenToLocation(String id) async {
+  Future<Stream<Coordinate>> listenToLocation(String id) async {
     _locations.child(id).onValue.listen((Event data) {
       Coordinate coordinate = parseLocation(id, data.snapshot);
       locationChatSubject.sink.add(coordinate);

@@ -52,7 +52,7 @@ class ChatProvider {
     _rooms[name] = chatRoom;
   }
 
-  Future<Observable<List<ChatRoom>>> listenToRooms() async {
+  Future<Stream<List<ChatRoom>>> listenToRooms() async {
     if (_rooms.isEmpty) {
       await getRooms(_roomIds);
     }
