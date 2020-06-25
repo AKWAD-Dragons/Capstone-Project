@@ -24,7 +24,6 @@ class Schedule implements Parser<Schedule> {
 
   @override
   dynamicParse(data) {
-    // TODO: implement dynamicParse
     return null;
   }
 

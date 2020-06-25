@@ -44,13 +44,11 @@ class Bill implements Parser<Bill> {
 
   @override
   dynamicParse(data) {
-    // TODO: implement dynamicParse
     return null;
   }
 
   @override
   Bill parse(data) {
-    // TODO: implement parse
     return null;
   }
 }

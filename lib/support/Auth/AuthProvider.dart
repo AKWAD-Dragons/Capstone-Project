@@ -1,14 +1,5 @@
 /*
- An Authentication utitlity provider that handles:
- TODO::
-  - Logining with Google
-  - Logining with LinkedIn
-  - Logining with Facebook
-  - email and password logining
-  - Handeling user Authentication state
-    * caching and refreshing tokens
-    * checking for an authenticated user
-    * unauthing a user
+ An Authentication utility provider
 */
 
 

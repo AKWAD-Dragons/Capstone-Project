@@ -43,13 +43,11 @@ class Visit implements Parser<Visit> {
 
   @override
   dynamicParse(data) {
-    // TODO: implement dynamicParse
     return Visit.fromJson(data);
   }
 
   @override
   Visit parse(data) {
-    // TODO: implement parse
     return Visit.fromJson(data);
   }
 }

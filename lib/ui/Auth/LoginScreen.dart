@@ -82,11 +82,11 @@ class _LoginScreenState extends State<LoginScreen> {
       if (userIs.user.id != null) {
         authSubject.cancel();
         if (userIs.user.role == CodeStrings.sp) {
-          ///TODO: Switch to home page
+          ///TODO: Navigate to home screen
           sub = _profileBloc.subject.listen((state) {
             if (state is CompanyInfoIs) {
               if (!state.sp.verify) {
-                ///TODO: Switch to onBoarding Home screen
+                ///TODO: Navigate to onBoarding Home screen
                 sub.cancel();
               } else {
                 MainRouter.navigator.pushReplacementNamed(MainRouter.parent);
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   .pushNamedAndRemoveUntil(MainRouter.unknownScreen, ((_) => false));
             }
           });
-          ///TODO: Switch to home page
+          ///TODO: Navigate to home screen
         }
       }
     });
@@ -308,7 +308,8 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           InkWell(
             onTap: () async {
-              ///TODO: Switch to Sign up screen
+              ///TODO: Navigate to Sign up screen
+              MainRouter.navigator.pushReplacementNamed(MainRouter.unknownScreen);
               this.authSubscription();
             },
             child: Container(

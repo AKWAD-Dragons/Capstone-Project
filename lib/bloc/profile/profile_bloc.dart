@@ -853,7 +853,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
     showLoadingDialog(tapDismiss: false);
     SP sp = this.sp;
     List<Node> areasList = List();
-    //TODO::THIS PART IS ALSO IN AREAS SCREEN => NEXTBUTTON AND SHOULD BE PUT IN ONE PLACE
+    ///THIS PART IS ALSO IN AREAS SCREEN => NEXT BUTTON AND SHOULD BE PUT IN ONE PLACE
     int areasSum = sp.areas == null ? 0 : sp.areas.length;
     int addedSum = sp.addedAreas == null ? 0 : sp.addedAreas.length;
     int deletedSum = sp.deletedAreas == null ? 0 : sp.deletedAreas.length;
@@ -931,7 +931,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
   Future<void> saveCompanyServices(SaveButtonTaped event) async {
     showLoadingDialog(tapDismiss: false);
     List<Node> servicesNodes = List();
-    //TODO::THIS PART IS ALSO IN SERVICES SCREEN => NEXTBUTTON AND SHOULD BE PUT IN ONE PLACE
+    ///THIS PART IS ALSO IN SERVICES SCREEN => NEXT BUTTON AND SHOULD BE PUT IN ONE PLACE
     int servicesSum = sp.services == null ? 0 : sp.services.length;
     int selectedSum =
         sp.selectedServices == null ? 0 : sp.selectedServices.length;

@@ -47,7 +47,6 @@ class AuthUser implements Parser<AuthUser> {
 
   @override
   dynamicParse(data) {
-    // TODO: implement dynamicParse
     return null;
   }
 

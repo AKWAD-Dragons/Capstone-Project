@@ -20,7 +20,6 @@ class Log implements Parser<Log>{
 
   @override
   dynamicParse(data) {
-    // TODO: implement dynamicParse
     return null;
   }
 
