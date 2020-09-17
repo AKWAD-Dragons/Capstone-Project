@@ -14,6 +14,7 @@ import 'package:sercl/bloc/orders/bloc.dart';
 
 import 'package:sercl/dialog_provider/dialog_models.dart';
 import 'package:sercl/dialog_provider/dialog_service.dart';
+import 'package:sercl/services/OrdersService.dart';
 import 'package:sercl/support/Auth/AppException.dart';
 import 'package:sercl/support/Auth/AuthProvider.dart';
 import 'package:sercl/support/Chat/chat_provider.dart';
@@ -37,6 +38,7 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   List<Invitation> myInvs = [];
   DialogService _dialogService = GetIt.instance<DialogService>();
   ChatProvider _provider;
+  OrdersService _ordersService = GetIt.instance<OrdersService>();
 
   /* Currently selected zip code from filter screen */
   List<String> zipCode = [];
@@ -370,22 +372,7 @@ class OrdersBloc extends BLoC<OrdersEvent> {
 
     updateMap["status"] = CodeStrings.r_rejected;
 
-    Node node = Node(
-      name: CodeStrings.updateSPNodeName,
-      args: {
-        "id": spId,
-        "input": {
-          "invitations": {
-            "update": updateMap,
-          }
-        }
-      },
-      cols: spCols,
-    );
-
-    Map result = await _fly
-        .mutation([node], parsers: {CodeStrings.updateSPNodeName: SP.empty()});
-    sp = result[CodeStrings.updateSPNodeName];
+    sp = await _ordersService.rejectInv(spId, updateMap);
     sp.invitations = removeAssignments(sp.invitations);
     ordersStateSubject.add(InvitationsAreAfterRejection(sp.invitations));
     hideLoadingDialog();
@@ -403,44 +390,12 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   }
 
   Future<void> getArchive() async {
-    Node node = Node(
-      name: "mySP",
-      cols: [
-        Node(
-          name: "orders",
-          cols: _orderCols,
-          args: {
-            "where": {
-              "column": "_STATUS",
-              "value": "_CLOSED",
-            },
-          },
-        ),
-      ],
-    );
-    Map result = await _fly.query([node], parsers: {'mySP': SP.empty()});
-    SP tempSp = result["mySP"];
+    SP tempSp = await _ordersService.getArchives();
     ordersStateSubject.sink.add(OrdersAreFetched(tempSp.orders));
   }
 
   Future<void> orderRequestedById(String id) async {
-    Node node = Node(
-      name: "mySP",
-      cols: [
-        Node(
-          name: "orders",
-          cols: _orderCols,
-          args: {
-            "where": {
-              "column": "_ID",
-              "value": id,
-            },
-          },
-        ),
-      ],
-    );
-    Map result = await _fly.query([node], parsers: {'mySP': SP.empty()});
-    SP tempSp = result["mySP"];
+    SP tempSp = await _ordersService.getOrderById(id);
     ordersStateSubject.sink.add(OrderIs(tempSp.orders[0]));
     this.order = tempSp.orders[0];
   }
@@ -448,25 +403,10 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   Future<void> addComplain(event) async {
     String desc = event.description;
     desc = desc.replaceAll("\n", " ");
-    Node node = Node(
-        name: 'updateSP',
-        args: {
-          'id': int.parse(event.spID),
-          'input': {
-            'complains': {
-              'create': {
-                "phone": " ",
-                "email": event.spEmail,
-                "description": desc,
-                "complainer": "_SERVICE_PROVIDER",
-                "order": {'connect': this.order.id}
-              }
-            },
-          },
-        },
-        cols: spCols);
+
     showLoadingDialog();
-    Map result = await _fly.mutation([node], parsers: {'updateSP': SP.empty()});
+    Map result = await _ordersService.addComplain(
+        event.spID, event.spEmail, desc, order);
     if (result['updateSP'] != null) {
       this.sp = result['updateSP'];
       hideLoadingDialog();
@@ -491,21 +431,9 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   }
 
   Future _updatePrice({String id, String price, String invitationId}) async {
-    Node query = Node(
-        name: 'updateSP',
-        args: {
-          'id': int.parse(id),
-          'input': {
-            'invitations': {
-              'update': {'id': invitationId, 'price': price}
-            },
-          },
-        },
-        cols: spCols);
     //showLoadingDialog(tapDismiss: false);
 
-    Map result =
-        await _fly.mutation([query], parsers: {'updateSP': SP.empty()});
+    Map result = await _ordersService.updatePrice(id, price, invitationId);
     print(result);
     if (result['updateSP'] == null) {
       print("Couldn't retract price");
@@ -523,20 +451,10 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   Future _updateInvitation(String spID, Invitation invitation, accept) async {
     print("ID Is ${invitation.id}");
     String state = accept ? CodeStrings.r_accepted : CodeStrings.r_rejected;
-    Node query = Node(name: 'updateSP', args: {
-      'id': int.parse(spID),
-      'input': {
-        'invitations': {
-          'update': {'id': int.parse(invitation.id), 'status': state}
-        },
-      },
-    }, cols: [
-      allInvitationsNode
-    ]);
+
     //showLoadingDialog();
 
-    dynamic result =
-        await _fly.mutation([query], parsers: {'updateSP': SP.empty()});
+    dynamic result = await _ordersService.updateInv(spID, invitation, state);
     if (result['updateSP'] != null) {
       this.sp = result['updateSP'];
       // Iterable<Invitation> one =
@@ -557,13 +475,7 @@ class OrdersBloc extends BLoC<OrdersEvent> {
 
 //need some work , not ready
   Future _getAvailableWorkers(AvailableWorkersRequested event) async {
-    Node query = Node(
-        name: 'availableWorkers',
-        args: {'date_time': 'date_time'},
-        cols: ['workers']);
-    showLoadingDialog(tapDismiss: false);
-    dynamic result =
-        await _fly.mutation([query], parsers: {'workers': Orders.empty()});
+    dynamic result = await _ordersService.getAvailableWorkers();
     if (result['workers'] == null) {
       throw AppException(true, beautifulMsg: AppStrings.cantGetWorkers);
     } else
@@ -571,23 +483,9 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   }
 
   Future<void> uploadReceipt(String receipt, String orderId) async {
-    Node query = Node(
-        name: 'updateSP',
-        args: {
-          'id': int.parse(this.sp.id),
-          'input': {
-            'orders': {
-              'update': {
-                'id': orderId,
-                'receipt': receipt == "" ? null : receipt
-              }
-            },
-          },
-        },
-        cols: spCols);
     showLoadingDialog(tapDismiss: false);
     dynamic result =
-        await _fly.mutation([query], parsers: {'updateSP': SP.empty()});
+        await _ordersService.uploadReceipt(receipt, orderId, this.sp.id);
     if (result['updateSP'] != null) {
       this.sp = result['updateSP'];
       hideLoadingDialog();
@@ -598,20 +496,8 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   }
 
   Future<void> setAsPaid(String orderId) async {
-    Node query = Node(
-        name: 'updateSP',
-        args: {
-          'id': int.parse(this.sp.id),
-          'input': {
-            'orders': {
-              'update': {'id': orderId, 'status': "_PAID"}
-            },
-          },
-        },
-        cols: spCols);
     showLoadingDialog(tapDismiss: false);
-    dynamic result =
-        await _fly.mutation([query], parsers: {'updateSP': SP.empty()});
+    dynamic result = await _ordersService.setAsPaid(orderId, this.sp.id);
     if (result['updateSP'] != null) {
       this.sp = result['updateSP'];
       hideLoadingDialog();
@@ -621,15 +507,14 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   }
 
   Future<void> _getOrders({String type}) async {
-    _ordersQuery = Node(name: "mySP", args: {}, cols: spCols);
     showLoadingDialog();
-    dynamic results =
-        await _fly.query([_ordersQuery], parsers: {'mySP': SP.empty()});
+    dynamic results = await _ordersService.getOrders();
     hideLoadingDialog();
 
     this.sp = results['mySP'];
     if (type == null || type == AppStrings.invitations) {
       sp.invitations = removeAssignments(sp.invitations);
+
       ///TODO: Notify screens for the invitations list
     }
   }
@@ -647,16 +532,8 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   }
 
   Future<void> _getServices() async {
-    _ordersQuery = Node(name: "mySP", args: {}, cols: [
-      Node(name: "services", args: {}, cols: [
-        'id',
-        'name',
-      ]),
-    ]);
-
     showLoadingDialog();
-    dynamic results =
-        await _fly.query([_ordersQuery], parsers: {'mySP': SP.empty()});
+    dynamic results = await _ordersService.getServices();
     hideLoadingDialog();
 
     SP tempSp = results['mySP'];
@@ -667,8 +544,7 @@ class OrdersBloc extends BLoC<OrdersEvent> {
   }
 
   Future<void> updateSPInvs() async {
-    Node node = Node(name: "mySP", args: {}, cols: [invitationsNode]);
-    dynamic results = await _fly.query([node], parsers: {'mySP': SP.empty()});
+    dynamic results = await _ordersService.updateSPInvs();
     hideLoadingDialog();
 
     SP tempSp = results['mySP'];
