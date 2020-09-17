@@ -10,6 +10,7 @@ import 'package:sercl/bloc/profile/profile_bloc.dart';
 import 'package:sercl/resources/links.dart';
 import 'package:sercl/services/OrdersService.dart';
 import 'package:sercl/services/ProfileService.dart';
+import 'package:sercl/services/ServicesService.dart';
 import 'package:sercl/support/Auth/AuthProvider.dart';
 import 'package:sercl/support/Fly/fly.dart';
 import 'bloc/auth/auth_bloc.dart';
@@ -55,6 +56,7 @@ initData() {
   GetIt.instance.registerSingleton<OrdersBloc>(OrdersBloc());
   GetIt.instance.registerSingleton<OrdersService>(OrdersService());
   GetIt.instance.registerSingleton<ProfileService>(ProfileService());
+  GetIt.instance.registerSingleton<ServicesService>(ServicesService());
 //  GetIt.instance.registerLazySingleton<VisitsBloc>(() => VisitsBloc());
 //  GetIt.instance.registerLazySingleton<ChatBloc>(() => ChatBloc());
 //  GetIt.instance.registerLazySingleton<LocationBloc>(() => LocationBloc());
