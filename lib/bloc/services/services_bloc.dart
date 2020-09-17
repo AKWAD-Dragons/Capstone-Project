@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sercl/PODO/Categories.dart';
@@ -8,16 +6,14 @@ import 'package:sercl/bloc/bloc.dart';
 import 'package:sercl/bloc/profile/profile_state.dart';
 import 'package:sercl/bloc/services/services_event.dart';
 import 'package:sercl/bloc/services/services_state.dart';
-import 'package:sercl/PODO/Service.dart';
-import 'package:sercl/PODO/Category.dart';
-import 'package:sercl/resources/res.dart';
+import 'package:sercl/services/ServicesService.dart';
 import 'package:sercl/support/Fly/fly.dart';
-import 'package:sercl/support/GraphClient/GraphQLBuilder.dart';
 
 class ServicesBloc extends BLoC<ServicesEvent> {
   BehaviorSubject<ProfileState> subject = BehaviorSubject();
   Fly fly = GetIt.instance<Fly>();
   Categories cats;
+  ServicesService _servicesService = GetIt.instance<ServicesService>();
 
   ServicesBloc() {
     getServices();
@@ -38,21 +34,7 @@ class ServicesBloc extends BLoC<ServicesEvent> {
   }
 
   Future<void> getServices() async {
-    Node catQuery = Node(name: "Categories", cols: [
-      'name',
-      'icon',
-      'color',
-      Node(name: 'services', cols: [
-        'id',
-        'name',
-        Node(name: "category", cols: [
-          "id",
-        ]),
-      ])
-    ]);
-
-    dynamic results = await fly
-        .query([catQuery], parsers: {'Categories': Categories.empty()});
+    dynamic results = await _servicesService.getServices();
 
     cats = results['Categories'];
   }

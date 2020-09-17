@@ -16,6 +16,7 @@ import 'package:sercl/dialog_provider/dialog_models.dart';
 import 'package:sercl/dialog_provider/dialog_service.dart';
 import 'package:sercl/main.dart';
 import 'package:sercl/resources/res.dart';
+import 'package:sercl/services/ProfileService.dart';
 import 'package:sercl/support/Auth/AppException.dart';
 import 'package:sercl/support/Auth/AuthProvider.dart';
 import 'package:sercl/support/Fly/fly.dart';
@@ -28,6 +29,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
   BehaviorSubject<ProfileState> subject = BehaviorSubject();
   DialogService _dialogService = GetIt.instance<DialogService>();
   final AuthProvider provider = GetIt.instance.get();
+  ProfileService _profileService = GetIt.instance<ProfileService>();
 
   SP sp;
   Technician tech;
@@ -35,234 +37,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
   //we need this so that user can cancel removing docs;
   Map<String, CustomFile> nonSubmittedRemovedDocs = {};
 
-  Fly fly;
-
-  static Node orderNode = Node(name: "order", cols: [
-    "id",
-    "customer_name",
-    Node(name: "service", cols: [
-      "id",
-      "name",
-    ]),
-    Node(name: "category", cols: [
-      "id",
-      "name",
-      "icon",
-      "color",
-    ]),
-    Node(
-      name: 'invitation',
-      cols: [
-        'id',
-        'price',
-        Node(
-          name: "order",
-          args: {},
-          cols: [
-            Node(
-              name: "serviceProvider",
-              args: {},
-              cols: ['id'],
-            ),
-          ],
-        ),
-      ],
-    ),
-    "description",
-    "record",
-    "receipt",
-    "status",
-    "customer_name",
-    "street_name",
-    "street_no",
-    "postcode",
-    "phone",
-    "email",
-    Node(name: "videos", cols: [
-      "id",
-      "video_link",
-    ]),
-    Node(name: "albums", cols: [
-      "id",
-      "image_link",
-    ])
-  ]);
-
-  static Node invitationsNode = Node(
-    name: "invitations",
-    args: {},
-    cols: [
-      "id",
-      "status",
-      "price",
-      "chat_room",
-      Node(
-        name: "order",
-        args: {},
-        cols: [
-          Node(
-            name: "serviceProvider",
-            args: {},
-            cols: ['id'],
-          ),
-        ],
-      ),
-      Node(
-        name: "request",
-        cols: [
-          "id",
-          "description",
-          "created_at",
-          "record",
-          "status",
-          Node(name: "category", cols: [
-            "id",
-            "name",
-            "icon",
-            "color",
-          ]),
-          Node(name: "customer", cols: [
-            "id",
-            "name",
-          ]),
-          Node(
-            name: "service",
-            cols: [
-              "id",
-              "name",
-            ],
-          ),
-          Node(
-            name: "address",
-            cols: ["id", "street_name", "street_number", "postal_code"],
-          ),
-          Node(
-            name: "albums",
-            cols: [
-              "id",
-              "image_link",
-            ],
-          ),
-          Node(
-            name: "videos",
-            cols: [
-              "id",
-              "video_link",
-            ],
-          )
-        ],
-      )
-    ],
-  );
-
-  List<dynamic> spCols = [
-    'id',
-    Node(name: "orders", args: {}, cols: [
-      'id',
-      'status',
-      'customer_name',
-      'email',
-      'street_no',
-      'street_name',
-      'phone',
-      "receipt",
-      'description',
-      'postcode',
-      Node(name: "service", cols: [
-        'id',
-        'name',
-        Node(name: "category", cols: [
-          "id",
-        ]),
-      ]),
-      Node(name: "category", cols: ['id', 'name', 'icon', 'color']),
-      Node(name: "albums", cols: [
-        'id',
-        'image_link',
-      ]),
-    ]),
-    Node(name: "ratings", cols: [
-      "id",
-      "rating",
-      "price_rating",
-      "comment",
-      "created_at",
-      orderNode,
-    ]),
-    invitationsNode,
-    workerNode,
-    'name',
-    'bio',
-    'logo_link',
-    'business_certificate',
-    'insurance',
-    'contract',
-    'verify',
-    'ready_for_verify',
-    'services_status',
-    'areas_status',
-    'info_status',
-    'documents_status',
-    'billing_status',
-    'avg_price',
-    'avg_rating',
-    'small_company',
-    Node(name: 'workers', cols: [
-      'id',
-      'name',
-      "email",
-      "custom_schedule",
-      Node(name: "schedules", cols: [
-        "id",
-        "day",
-        "from",
-        "to",
-      ]),
-      Node(name: 'authUser', cols: ['id', 'email', 'role', 'first_logged']),
-    ]),
-    Node(name: 'areas', cols: ['id', 'to', 'from']),
-    Node(name: 'services', cols: [
-      'name',
-      'id',
-      Node(name: "category", cols: [
-        "id",
-      ]),
-    ]),
-    Node(name: 'albums', cols: ['id', 'image_link']),
-    Node(name: 'notes', cols: ['id', 'description', 'created_at', 'section']),
-    Node(name: 'authUser', cols: ['id', 'email', 'role', 'first_logged']),
-  ];
-
-  static Node workerNode = Node(name: "worker", cols: [
-    'id',
-    'name',
-    "email",
-    "custom_schedule",
-    Node(name: "schedules", cols: [
-      "id",
-      "day",
-      "from",
-      "to",
-    ]),
-    Node(name: 'authUser', cols: ['id', 'email', 'role', 'first_logged']),
-  ]);
-
-  List<dynamic> workerCols = [
-    'id',
-    'name',
-    "email",
-    "custom_schedule",
-    Node(name: "schedules", cols: [
-      "id",
-      "day",
-      "from",
-      "to",
-    ]),
-    Node(name: 'authUser', cols: ['id', 'email', 'role', 'first_logged']),
-  ];
-
   ProfileBloc() {
-    fly = GetIt.instance<Fly<dynamic>>();
     sp = SP.empty();
   }
 
@@ -543,25 +318,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
   void getSPBillingInfo() async {
     showLoadingDialog();
 
-    Node billingInfoNode = Node(
-      name: 'mySP',
-      args: {},
-      cols: [
-        'billing_status',
-        'street_name',
-        'street_number',
-        'phone',
-        'postal_code',
-        'city',
-        'iban',
-        'bic',
-        'small_company',
-        'tax_id'
-      ],
-    );
-
-    Map mySP =
-        await fly.query([billingInfoNode], parsers: {"mySP": SP.empty()});
+    Map mySP = await _profileService.getSPBillingInfo();
     this.sp
       ..billing_status = mySP["mySP"].billing_status
       ..streetName = mySP["mySP"].streetName
@@ -631,27 +388,10 @@ class ProfileBloc extends BLoC<ProfileEvent> {
       'city': sp.city,
       'iban': sp.iban.toString(),
       'bic': sp.bic.toString(),
-      'tax_id':sp.taxId.isEmpty?null:sp.taxId
+      'tax_id': sp.taxId.isEmpty ? null : sp.taxId
     };
 
-    Node billingInfoNode = Node(
-      name: 'updateSP',
-      args: argMap,
-      cols: [
-        'billing_status',
-        'info_status',
-        'street_name',
-        'street_number',
-        'phone',
-        'postal_code',
-        'city',
-        'iban',
-        'bic',
-      ],
-    );
-
-    Map mySP = await fly
-        .mutation([billingInfoNode], parsers: {"updateSP": SP.empty()});
+    Map mySP = await _profileService.saveBillingInfo(argMap);
     this.sp
       ..billing_status = mySP["updateSP"].billing_status
       ..info_status = mySP["updateSP"].info_status
@@ -679,19 +419,8 @@ class ProfileBloc extends BLoC<ProfileEvent> {
       this.sp.contract = this.sp.contractFile.base64;
     }
     showLoadingDialog(tapDismiss: false);
-    Node updateSpMutation = Node(
-        name: "updateSP",
-        args: {
-          "id": sp.id,
-          "business_certificate": sp.business_certificate,
-          "insurance": sp.insurance,
-          "contract": sp.contract,
-          "documents_status": true,
-        },
-        cols: this.spCols);
 
-    Map updatedSP = await fly
-        .mutation([updateSpMutation], parsers: {"updateSP": SP.empty()});
+    Map updatedSP = await _profileService.saveCompanyFiles(sp);
     hideLoadingDialog();
     if (updatedSP['updateSP'].documents_status != "completed") {
 //      AppException(false,
@@ -780,7 +509,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
       "small_company": sp.small_company,
       "info_status": true,
     };
-    if(!sp.small_company && (sp.taxId==null || sp.taxId.trim().isEmpty)){
+    if (!sp.small_company && (sp.taxId == null || sp.taxId.trim().isEmpty)) {
       args['billing_status'] = false;
     }
     if (photo != null) {
@@ -830,11 +559,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
       args["input"] = {"albums": albumMap};
     }
 
-    Node updateSpMutation =
-        Node(name: "updateSP", args: args, cols: this.spCols);
-    print(updateSpMutation.toString());
-    Map updatedSP = await fly
-        .mutation([updateSpMutation], parsers: {"updateSP": SP.empty()});
+    Map updatedSP = await _profileService.saveCompanyInfo(args);
     this.sp = updatedSP['updateSP'];
     if (updatedSP['updateSP'].info_status == null ||
         updatedSP['updateSP'].info_status == false) {
@@ -852,31 +577,14 @@ class ProfileBloc extends BLoC<ProfileEvent> {
   Future<void> saveCompanyAreas(SaveButtonTaped event) async {
     showLoadingDialog(tapDismiss: false);
     SP sp = this.sp;
-    List<Node> areasList = List();
+
     ///THIS PART IS ALSO IN AREAS SCREEN => NEXT BUTTON AND SHOULD BE PUT IN ONE PLACE
     int areasSum = sp.areas == null ? 0 : sp.areas.length;
     int addedSum = sp.addedAreas == null ? 0 : sp.addedAreas.length;
     int deletedSum = sp.deletedAreas == null ? 0 : sp.deletedAreas.length;
     bool areasStatus = areasSum + addedSum - deletedSum != 0;
 
-    areasList.add(Node(
-        name: "updateSP",
-        args: {
-          "id": int.parse(sp.id),
-          "areas_status": areasStatus,
-          'input': {
-            'areas': <String, dynamic>{
-              'create': sp.addedAreas
-                  .map((e) => {"from": e.from, "to": e.to})
-                  .toList(),
-              'delete': sp.deletedAreas.map((e) => e.id).toList()
-            }
-          },
-        },
-        cols: this.spCols));
-
-    Map updatedSP =
-        await fly.mutation(areasList, parsers: {"updateSP": SP.empty()});
+    Map updatedSP = await _profileService.saveCompanyAreas(sp, areasStatus);
     hideLoadingDialog();
     if (updatedSP['updateSP'].areas_status != true) {
 //      AppException(false,
@@ -930,7 +638,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
 
   Future<void> saveCompanyServices(SaveButtonTaped event) async {
     showLoadingDialog(tapDismiss: false);
-    List<Node> servicesNodes = List();
+
     ///THIS PART IS ALSO IN SERVICES SCREEN => NEXT BUTTON AND SHOULD BE PUT IN ONE PLACE
     int servicesSum = sp.services == null ? 0 : sp.services.length;
     int selectedSum =
@@ -941,27 +649,9 @@ class ProfileBloc extends BLoC<ProfileEvent> {
     Set<String> conCats = buildConCats();
     Set<String> disConCats = buildDisConCats();
     // update the SP state
-    servicesNodes.add(Node(
-        name: "updateSP",
-        args: {
-          "id": int.parse(sp.id),
-          "services_status": servicesState,
-          'input': {
-            'services': <String, dynamic>{
-              'connect': sp.selectedServices.map((e) => e.id).toList(),
-              'disconnect':
-                  sp.deSelectedServices.map((serv) => serv.id).toList()
-            },
-            'categories': <String, dynamic>{
-              'connect': conCats.toList(),
-              'disconnect': disConCats.toList()
-            }
-          },
-        },
-        cols: this.spCols));
 
-    Map resluts =
-        await fly.mutation(servicesNodes, parsers: {"updateSP": SP.empty()});
+    Map resluts = await _profileService.saveCompanyServices(
+        conCats, disConCats, sp, servicesState);
     hideLoadingDialog();
     if (resluts['updateSP'].services_status != true) {
 //      AppException(false,
@@ -999,20 +689,8 @@ class ProfileBloc extends BLoC<ProfileEvent> {
     nonSubmittedRemovedDocs = {};
     showLoadingDialog(tapDismiss: false);
     print(this.sp.id);
-    Node updateSpMutation = Node(
-      name: "updateSP",
-      args: {
-        "id": int.parse(this.sp.id),
-        'ready_for_verify': true,
-        // "input": {
 
-        // },
-      },
-      cols: this.spCols,
-    );
-
-    dynamic updatedSP = await fly
-        .mutation([updateSpMutation], parsers: {"updateSP": SP.empty()});
+    dynamic updatedSP = await _profileService.submitCompanyForReview(sp);
     this.sp = updatedSP['updateSP'];
     hideLoadingDialog();
     if (updatedSP['updateSP'].ready_for_verify == null) {
@@ -1040,21 +718,7 @@ class ProfileBloc extends BLoC<ProfileEvent> {
     //query to get the sp
     //showLoadingDialog();
 
-    Node node;
-    Map<String, dynamic> parsers;
-
-    if (provider.user.role == CodeStrings.sp) {
-      node = Node(name: 'mySP', cols: spCols);
-      parsers = {"mySP": SP.empty()};
-    } else if (provider.user.role == CodeStrings.worker) {
-      node = Node(name: 'myWorker', cols: workerCols);
-      parsers = {"myWorker": Technician.empty()};
-    } else {
-      throw AppException(false,
-          name: "UserRoleInvalid", beautifulMsg: AppStrings.noRole);
-    }
-
-    Map result = await fly.query([node], parsers: parsers);
+    Map result = await _profileService.homePageLaunched(provider.user.role);
 
     if (provider.user.role == CodeStrings.sp) {
       if (result["mySP"] == null) {
@@ -1080,22 +744,12 @@ class ProfileBloc extends BLoC<ProfileEvent> {
   }
 
   Future<void> updateSP() async {
-    Node sps = Node(name: 'mySP', cols: spCols);
-    Map<String, dynamic> parsers = {"mySP": SP.empty()};
-    // check if we dont have a SP
-    Map result = await fly.query([sps], parsers: parsers);
+    Map result = await _profileService.updateSP();
     this.sp = result['mySP'];
   }
 
   Future createSP() async {
-    Node createSpMutation = Node(
-        name: "createSP",
-        args: {
-          "auth_user_id": int.parse(provider.user.id),
-        },
-        cols: this.spCols);
-    Map<String, Parser<dynamic>> parsers = {"createSP": SP.empty()};
-    Map result = await fly.mutation([createSpMutation], parsers: parsers);
+    Map result = await _profileService.createSP(provider.user.id);
     if (result["createSP"].id == null) {
 //      throw AppException(false,
 //          name: "SpIDMissing",
